@@ -34,26 +34,57 @@
         </div>
       </header>
 
-      <section class="stats-grid" aria-label="Resumen de prestamos">
-        <article>
-          <span>Prestado</span>
-          <strong id="summary-principal">$0.00</strong>
-        </article>
-        <article>
-          <span>Cobrado</span>
-          <strong id="summary-paid">$0.00</strong>
-        </article>
-        <article>
-          <span>Activos</span>
-          <strong id="summary-active">0</strong>
-        </article>
+      <!--
+        MENU DE OPCIONES:
+        Cada boton tiene data-section. JavaScript usa ese valor para mostrar una seccion
+        y ocultar las otras.
+      -->
+      <nav class="app-menu" aria-label="Menu de opciones">
+        <button class="menu-button active" type="button" data-section="summary-section">
+          Resumen
+        </button>
+        <button class="menu-button" type="button" data-section="form-section">
+          Nuevo prestamo
+        </button>
+        <button class="menu-button" type="button" data-section="loans-section">
+          Prestamos
+        </button>
+        <button class="menu-button" type="button" data-section="help-section">
+          Ayuda
+        </button>
+      </nav>
+
+      <section class="app-section active-section" id="summary-section">
+        <section class="stats-grid" aria-label="Resumen de prestamos">
+          <article>
+            <span>Prestado</span>
+            <strong id="summary-principal">$0.00</strong>
+          </article>
+          <article>
+            <span>Cobrado</span>
+            <strong id="summary-paid">$0.00</strong>
+          </article>
+          <article>
+            <span>Activos</span>
+            <strong id="summary-active">0</strong>
+          </article>
+        </section>
+
+        <section class="panel compact-panel">
+          <p class="section-kicker">Vista general</p>
+          <h2>Control rapido</h2>
+          <p class="helper-text">
+            Usa el menu para registrar nuevos prestamos, revisar clientes o aprender como funciona
+            cada parte del CRUD.
+          </p>
+        </section>
       </section>
 
       <!--
         FORMULARIO PRINCIPAL:
         Sirve para crear un prestamo nuevo o editar uno existente.
       -->
-      <section class="panel">
+      <section class="panel app-section" id="form-section">
         <div class="panel-heading">
           <div>
             <p class="section-kicker">Create / Update</p>
@@ -119,7 +150,7 @@
         </form>
       </section>
 
-      <section class="panel">
+      <section class="panel app-section" id="loans-section">
         <div class="panel-heading">
           <div>
             <p class="section-kicker">Read / Delete / Pagos</p>
@@ -131,6 +162,29 @@
         <!-- JavaScript llenara esta lista con tarjetas de prestamos. -->
         <div class="loan-list" id="loan-list"></div>
         <p class="empty-state" id="empty-state">Todavia no hay prestamos registrados.</p>
+      </section>
+
+      <section class="panel app-section" id="help-section">
+        <p class="section-kicker">Guia rapida</p>
+        <h2>Como usar esta app</h2>
+        <div class="help-grid">
+          <article>
+            <strong>1. Crear</strong>
+            <p>Entra en Nuevo prestamo, llena el formulario y guarda.</p>
+          </article>
+          <article>
+            <strong>2. Leer</strong>
+            <p>En Prestamos ves cada cliente, total, pagado, pendiente y cuota.</p>
+          </article>
+          <article>
+            <strong>3. Actualizar</strong>
+            <p>Usa Editar para cambiar datos o Registrar pago para abonar.</p>
+          </article>
+          <article>
+            <strong>4. Eliminar</strong>
+            <p>Usa Eliminar cuando quieras borrar un prestamo de la lista.</p>
+          </article>
+        </div>
       </section>
     </main>
 

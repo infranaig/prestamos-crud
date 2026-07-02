@@ -4,6 +4,7 @@ Esta es tu segunda app CRUD. El objetivo es aprender con un ejemplo mas parecido
 
 La app permite:
 
+- Navegar con un menu de opciones.
 - Crear prestamos.
 - Ver prestamos registrados.
 - Editar prestamos.
@@ -26,9 +27,16 @@ No necesitas instalar nada. Es HTML, CSS y JavaScript puro.
 
 ## Como probar el CRUD
 
+Primero usa el menu superior:
+
+- `Resumen`: muestra totales generales.
+- `Nuevo prestamo`: abre el formulario.
+- `Prestamos`: muestra la lista y acciones.
+- `Ayuda`: explica el flujo basico.
+
 ### Create: crear
 
-Llena el formulario:
+Entra a `Nuevo prestamo` y llena el formulario:
 
 - Nombre del cliente.
 - Monto prestado.

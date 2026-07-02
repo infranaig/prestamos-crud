@@ -36,6 +36,8 @@ const message = document.querySelector("#message");
 const loanList = document.querySelector("#loan-list");
 const emptyState = document.querySelector("#empty-state");
 const searchInput = document.querySelector("#search-input");
+const menuButtons = document.querySelectorAll(".menu-button");
+const appSections = document.querySelectorAll(".app-section");
 
 const summaryPending = document.querySelector("#summary-pending");
 const summaryPrincipal = document.querySelector("#summary-principal");
@@ -85,6 +87,24 @@ function showMessage(text, type = "success") {
 function clearMessage() {
   message.textContent = "";
   message.className = "message";
+}
+
+/*
+  MENU DE OPCIONES:
+  showSection recibe el id de una seccion, por ejemplo "loans-section".
+  Luego:
+  1. Oculta todas las secciones.
+  2. Muestra solo la seccion elegida.
+  3. Marca el boton activo.
+*/
+function showSection(sectionId) {
+  appSections.forEach((section) => {
+    section.classList.toggle("active-section", section.id === sectionId);
+  });
+
+  menuButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.section === sectionId);
+  });
 }
 
 /*
@@ -179,6 +199,7 @@ function addLoan(data) {
   saveLoans();
   render();
   resetForm();
+  showSection("loans-section");
   showMessage("Prestamo guardado.");
 }
 
@@ -197,6 +218,7 @@ function updateLoan(loanId, data) {
   saveLoans();
   render();
   resetForm();
+  showSection("loans-section");
   showMessage("Prestamo actualizado.");
 }
 
@@ -231,6 +253,7 @@ function startEditing(loanId) {
   submitButton.textContent = "Actualizar prestamo";
   formTitle.textContent = "Editar prestamo";
   cancelEditButton.classList.remove("hidden");
+  showSection("form-section");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -420,6 +443,12 @@ cancelEditButton.addEventListener("click", () => {
 searchInput.addEventListener("input", () => {
   searchText = searchInput.value;
   renderLoans();
+});
+
+menuButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    showSection(button.dataset.section);
+  });
 });
 
 /*

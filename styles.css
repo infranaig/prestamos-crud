@@ -63,6 +63,31 @@ button:disabled {
   margin-bottom: 18px;
 }
 
+.app-menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.menu-button {
+  min-height: 42px;
+  padding: 0 12px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.menu-button:hover,
+.menu-button.active {
+  background: var(--primary);
+  color: white;
+}
+
 .eyebrow,
 .section-kicker {
   margin: 0 0 6px;
@@ -129,6 +154,14 @@ h2 {
   margin-bottom: 18px;
 }
 
+.app-section {
+  display: none;
+}
+
+.app-section.active-section {
+  display: block;
+}
+
 .stats-grid article {
   display: grid;
   gap: 8px;
@@ -142,6 +175,10 @@ h2 {
 .panel {
   margin-bottom: 18px;
   padding: 22px;
+}
+
+.compact-panel {
+  margin-bottom: 18px;
 }
 
 .panel-heading {
@@ -235,6 +272,12 @@ textarea:focus {
 
 .message.success {
   color: var(--success);
+}
+
+.helper-text {
+  max-width: 720px;
+  margin: 10px 0 0;
+  color: var(--muted);
 }
 
 #search-input {
@@ -361,6 +404,31 @@ textarea:focus {
   text-align: center;
 }
 
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.help-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.help-grid strong {
+  color: var(--primary-dark);
+}
+
+.help-grid p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
 .hidden {
   display: none;
 }
@@ -373,7 +441,8 @@ textarea:focus {
 
   .loan-form,
   .stats-grid,
-  .loan-details {
+  .loan-details,
+  .help-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -403,7 +472,9 @@ textarea:focus {
   .loan-form,
   .stats-grid,
   .loan-details,
-  .loan-actions {
+  .loan-actions,
+  .app-menu,
+  .help-grid {
     grid-template-columns: 1fr;
   }
 
