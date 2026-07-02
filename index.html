@@ -18,174 +18,196 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <header class="app-header">
-        <div>
-          <p class="eyebrow">Mi segunda app CRUD</p>
-          <h1>Prestamos diarios</h1>
-          <p class="intro">
-            Registra prestamos, calcula el total con interes y controla pagos diarios, semanales,
-            quincenales o mensuales.
-          </p>
+    <main class="app-shell dashboard-layout">
+      <!--
+        SIDEBAR:
+        Es el menu lateral de la app. Cada boton tiene data-section.
+        JavaScript usa ese valor para mostrar una seccion y ocultar las otras.
+      -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <span class="brand-mark">P</span>
+          <div>
+            <strong>Prestamos</strong>
+            <small>Panel CRUD</small>
+          </div>
         </div>
-        <div class="summary-card">
+
+        <nav class="app-menu" aria-label="Menu de opciones">
+          <button class="menu-button active" type="button" data-section="summary-section">
+            <span>Resumen</span>
+          </button>
+          <button class="menu-button" type="button" data-section="form-section">
+            <span>Nuevo prestamo</span>
+          </button>
+          <button class="menu-button" type="button" data-section="loans-section">
+            <span>Prestamos</span>
+          </button>
+          <button class="menu-button" type="button" data-section="help-section">
+            <span>Ayuda</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-total">
           <span>Total pendiente</span>
           <strong id="summary-pending">$0.00</strong>
         </div>
-      </header>
+      </aside>
 
-      <!--
-        MENU DE OPCIONES:
-        Cada boton tiene data-section. JavaScript usa ese valor para mostrar una seccion
-        y ocultar las otras.
-      -->
-      <nav class="app-menu" aria-label="Menu de opciones">
-        <button class="menu-button active" type="button" data-section="summary-section">
-          Resumen
-        </button>
-        <button class="menu-button" type="button" data-section="form-section">
-          Nuevo prestamo
-        </button>
-        <button class="menu-button" type="button" data-section="loans-section">
-          Prestamos
-        </button>
-        <button class="menu-button" type="button" data-section="help-section">
-          Ayuda
-        </button>
-      </nav>
+      <div class="main-content">
+        <header class="app-header">
+          <div>
+            <p class="eyebrow">Mi segunda app CRUD</p>
+            <h1>Prestamos diarios</h1>
+            <p class="intro">
+              Registra prestamos, calcula el total con interes y controla pagos diarios, semanales,
+              quincenales o mensuales.
+            </p>
+          </div>
+        </header>
 
-      <section class="app-section active-section" id="summary-section">
-        <section class="stats-grid" aria-label="Resumen de prestamos">
-          <article>
-            <span>Prestado</span>
-            <strong id="summary-principal">$0.00</strong>
-          </article>
-          <article>
-            <span>Cobrado</span>
-            <strong id="summary-paid">$0.00</strong>
-          </article>
-          <article>
-            <span>Activos</span>
-            <strong id="summary-active">0</strong>
-          </article>
+        <section class="app-section active-section" id="summary-section">
+          <section class="stats-grid" aria-label="Resumen de prestamos">
+            <article>
+              <span>Prestado</span>
+              <strong id="summary-principal">$0.00</strong>
+            </article>
+            <article>
+              <span>Cobrado</span>
+              <strong id="summary-paid">$0.00</strong>
+            </article>
+            <article>
+              <span>Activos</span>
+              <strong id="summary-active">0</strong>
+            </article>
+          </section>
+
+          <section class="panel compact-panel">
+            <p class="section-kicker">Vista general</p>
+            <h2>Control rapido</h2>
+            <p class="helper-text">
+              Usa el sidebar para registrar nuevos prestamos, revisar clientes o aprender como
+              funciona cada parte del CRUD.
+            </p>
+          </section>
         </section>
 
-        <section class="panel compact-panel">
-          <p class="section-kicker">Vista general</p>
-          <h2>Control rapido</h2>
-          <p class="helper-text">
-            Usa el menu para registrar nuevos prestamos, revisar clientes o aprender como funciona
-            cada parte del CRUD.
-          </p>
+        <!--
+          FORMULARIO PRINCIPAL:
+          Sirve para crear un prestamo nuevo o editar uno existente.
+        -->
+        <section class="panel app-section" id="form-section">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Create / Update</p>
+              <h2 id="form-title">Nuevo prestamo</h2>
+            </div>
+            <button class="ghost-button hidden" id="cancel-edit-button" type="button">
+              Cancelar edicion
+            </button>
+          </div>
+
+          <form class="loan-form" id="loan-form">
+            <input id="editing-loan-id" type="hidden" />
+
+            <label>
+              Nombre del cliente
+              <input id="customer-name" type="text" placeholder="Ejemplo: Ana Perez" required />
+            </label>
+
+            <label>
+              Telefono
+              <input id="customer-phone" type="tel" placeholder="Ejemplo: 555-123-4567" />
+            </label>
+
+            <label class="full-width">
+              Direccion donde vive
+              <input
+                id="customer-address"
+                type="text"
+                placeholder="Ejemplo: Calle 10 #25-30, barrio Centro"
+              />
+            </label>
+
+            <label>
+              Monto prestado
+              <input id="principal" type="number" min="1" step="0.01" placeholder="1000" required />
+            </label>
+
+            <label>
+              Interes %
+              <input id="interest-rate" type="number" min="0" step="0.01" placeholder="20" required />
+            </label>
+
+            <label>
+              Frecuencia de pago
+              <select id="payment-frequency" required>
+                <option value="diario">Diario</option>
+                <option value="semanal">Semanal</option>
+                <option value="quincenal">Quincenal</option>
+                <option value="mensual">Mensual</option>
+              </select>
+            </label>
+
+            <label>
+              Cantidad de cuotas
+              <input id="installments" type="number" min="1" step="1" placeholder="20" required />
+            </label>
+
+            <label>
+              Fecha de inicio
+              <input id="start-date" type="date" required />
+            </label>
+
+            <label class="full-width">
+              Nota
+              <textarea id="note" rows="3" placeholder="Ejemplo: paga en la tarde"></textarea>
+            </label>
+
+            <div class="form-actions full-width">
+              <button type="submit" id="submit-button">Guardar prestamo</button>
+              <p class="message" id="message" aria-live="polite"></p>
+            </div>
+          </form>
         </section>
-      </section>
 
-      <!--
-        FORMULARIO PRINCIPAL:
-        Sirve para crear un prestamo nuevo o editar uno existente.
-      -->
-      <section class="panel app-section" id="form-section">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Create / Update</p>
-            <h2 id="form-title">Nuevo prestamo</h2>
+        <section class="panel app-section" id="loans-section">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Read / Delete / Pagos</p>
+              <h2>Prestamos registrados</h2>
+            </div>
+            <input id="search-input" type="search" placeholder="Buscar cliente..." />
           </div>
-          <button class="ghost-button hidden" id="cancel-edit-button" type="button">
-            Cancelar edicion
-          </button>
-        </div>
 
-        <form class="loan-form" id="loan-form">
-          <input id="editing-loan-id" type="hidden" />
+          <!-- JavaScript llenara esta lista con tarjetas de prestamos. -->
+          <div class="loan-list" id="loan-list"></div>
+          <p class="empty-state" id="empty-state">Todavia no hay prestamos registrados.</p>
+        </section>
 
-          <label>
-            Nombre del cliente
-            <input id="customer-name" type="text" placeholder="Ejemplo: Ana Perez" required />
-          </label>
-
-          <label>
-            Telefono
-            <input id="customer-phone" type="tel" placeholder="Ejemplo: 555-123-4567" />
-          </label>
-
-          <label>
-            Monto prestado
-            <input id="principal" type="number" min="1" step="0.01" placeholder="1000" required />
-          </label>
-
-          <label>
-            Interes %
-            <input id="interest-rate" type="number" min="0" step="0.01" placeholder="20" required />
-          </label>
-
-          <label>
-            Frecuencia de pago
-            <select id="payment-frequency" required>
-              <option value="diario">Diario</option>
-              <option value="semanal">Semanal</option>
-              <option value="quincenal">Quincenal</option>
-              <option value="mensual">Mensual</option>
-            </select>
-          </label>
-
-          <label>
-            Cantidad de cuotas
-            <input id="installments" type="number" min="1" step="1" placeholder="20" required />
-          </label>
-
-          <label>
-            Fecha de inicio
-            <input id="start-date" type="date" required />
-          </label>
-
-          <label class="full-width">
-            Nota
-            <textarea id="note" rows="3" placeholder="Ejemplo: paga en la tarde"></textarea>
-          </label>
-
-          <div class="form-actions full-width">
-            <button type="submit" id="submit-button">Guardar prestamo</button>
-            <p class="message" id="message" aria-live="polite"></p>
+        <section class="panel app-section" id="help-section">
+          <p class="section-kicker">Guia rapida</p>
+          <h2>Como usar esta app</h2>
+          <div class="help-grid">
+            <article>
+              <strong>1. Crear</strong>
+              <p>Entra en Nuevo prestamo, llena el formulario y guarda.</p>
+            </article>
+            <article>
+              <strong>2. Leer</strong>
+              <p>En Prestamos ves cada cliente, total, pagado, pendiente y cuota.</p>
+            </article>
+            <article>
+              <strong>3. Actualizar</strong>
+              <p>Usa Editar para cambiar datos o Registrar pago para abonar.</p>
+            </article>
+            <article>
+              <strong>4. Eliminar</strong>
+              <p>Usa Eliminar cuando quieras borrar un prestamo de la lista.</p>
+            </article>
           </div>
-        </form>
-      </section>
-
-      <section class="panel app-section" id="loans-section">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Read / Delete / Pagos</p>
-            <h2>Prestamos registrados</h2>
-          </div>
-          <input id="search-input" type="search" placeholder="Buscar cliente..." />
-        </div>
-
-        <!-- JavaScript llenara esta lista con tarjetas de prestamos. -->
-        <div class="loan-list" id="loan-list"></div>
-        <p class="empty-state" id="empty-state">Todavia no hay prestamos registrados.</p>
-      </section>
-
-      <section class="panel app-section" id="help-section">
-        <p class="section-kicker">Guia rapida</p>
-        <h2>Como usar esta app</h2>
-        <div class="help-grid">
-          <article>
-            <strong>1. Crear</strong>
-            <p>Entra en Nuevo prestamo, llena el formulario y guarda.</p>
-          </article>
-          <article>
-            <strong>2. Leer</strong>
-            <p>En Prestamos ves cada cliente, total, pagado, pendiente y cuota.</p>
-          </article>
-          <article>
-            <strong>3. Actualizar</strong>
-            <p>Usa Editar para cambiar datos o Registrar pago para abonar.</p>
-          </article>
-          <article>
-            <strong>4. Eliminar</strong>
-            <p>Usa Eliminar cuando quieras borrar un prestamo de la lista.</p>
-          </article>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
 
     <script src="app.js"></script>

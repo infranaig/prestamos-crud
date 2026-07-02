@@ -23,6 +23,7 @@ const loanForm = document.querySelector("#loan-form");
 const editingLoanId = document.querySelector("#editing-loan-id");
 const customerName = document.querySelector("#customer-name");
 const customerPhone = document.querySelector("#customer-phone");
+const customerAddress = document.querySelector("#customer-address");
 const principal = document.querySelector("#principal");
 const interestRate = document.querySelector("#interest-rate");
 const paymentFrequency = document.querySelector("#payment-frequency");
@@ -59,6 +60,19 @@ function formatMoney(amount) {
 
 function toNumber(value) {
   return Number(value) || 0;
+}
+
+/*
+  escapeHTML protege la pantalla cuando mostramos texto escrito por el usuario.
+  Ejemplo: nombre, telefono, direccion o nota.
+*/
+function escapeHTML(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function loadLoans() {
@@ -137,6 +151,7 @@ function createLoan(data) {
     id: crypto.randomUUID(),
     customerName: data.customerName,
     customerPhone: data.customerPhone,
+    customerAddress: data.customerAddress,
     principal: data.principal,
     interestRate: data.interestRate,
     paymentFrequency: data.paymentFrequency,
@@ -152,6 +167,7 @@ function getFormData() {
   return {
     customerName: customerName.value.trim(),
     customerPhone: customerPhone.value.trim(),
+    customerAddress: customerAddress.value.trim(),
     principal: toNumber(principal.value),
     interestRate: toNumber(interestRate.value),
     paymentFrequency: paymentFrequency.value,
@@ -243,6 +259,7 @@ function startEditing(loanId) {
   editingLoanId.value = loan.id;
   customerName.value = loan.customerName;
   customerPhone.value = loan.customerPhone;
+  customerAddress.value = loan.customerAddress || "";
   principal.value = loan.principal;
   interestRate.value = loan.interestRate;
   paymentFrequency.value = loan.paymentFrequency;
@@ -323,7 +340,11 @@ function getFilteredLoans() {
     return loans;
   }
 
-  return loans.filter((loan) => loan.customerName.toLowerCase().includes(cleanSearch));
+  return loans.filter((loan) => {
+    const name = loan.customerName.toLowerCase();
+    const address = (loan.customerAddress || "").toLowerCase();
+    return name.includes(cleanSearch) || address.includes(cleanSearch);
+  });
 }
 
 function renderSummary() {
@@ -348,6 +369,10 @@ function renderLoans() {
     const remaining = calculateRemaining(loan);
     const installmentAmount = calculateInstallmentAmount(loan);
     const status = getLoanStatus(loan);
+    const safeCustomerName = escapeHTML(loan.customerName);
+    const safeCustomerPhone = escapeHTML(loan.customerPhone);
+    const safeCustomerAddress = escapeHTML(loan.customerAddress);
+    const safeNote = escapeHTML(loan.note);
 
     const card = document.createElement("article");
     card.className = status === "Pagado" ? "loan-card is-paid" : "loan-card";
@@ -355,7 +380,7 @@ function renderLoans() {
     card.innerHTML = `
       <div class="loan-main">
         <div class="loan-title">
-          <h3>${loan.customerName}</h3>
+          <h3>${safeCustomerName}</h3>
           <span class="badge ${status === "Pagado" ? "paid" : ""}">${status}</span>
         </div>
 
@@ -383,16 +408,17 @@ function renderLoans() {
         </div>
 
         <p class="loan-note">
-          ${loan.customerPhone ? `Telefono: ${loan.customerPhone}. ` : ""}
+          ${loan.customerPhone ? `Telefono: ${safeCustomerPhone}. ` : ""}
+          ${loan.customerAddress ? `Direccion: ${safeCustomerAddress}. ` : ""}
           Inicio: ${loan.startDate}. Interes: ${loan.interestRate}%.
-          ${loan.note ? `Nota: ${loan.note}` : ""}
+          ${loan.note ? `Nota: ${safeNote}` : ""}
         </p>
       </div>
 
       <div class="loan-actions">
         <button class="pay-button" type="button" data-action="pay" data-id="${loan.id}">Registrar pago</button>
         <input
-          aria-label="Monto de pago para ${loan.customerName}"
+          aria-label="Monto de pago para ${safeCustomerName}"
           data-payment-input="${loan.id}"
           min="1"
           placeholder="${formatMoney(Math.min(installmentAmount, remaining))}"
