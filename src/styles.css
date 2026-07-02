@@ -1,8 +1,4 @@
 :root {
-  /*
-    Variables de diseno.
-    Cambiando estas variables cambias colores en toda la app.
-  */
   --bg: #f4f6f8;
   --surface: #ffffff;
   --surface-soft: #f8fafc;
@@ -43,11 +39,6 @@ button {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 800;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
 }
 
 .app-shell {
@@ -186,31 +177,12 @@ h2 {
   color: var(--muted);
 }
 
-.summary-card,
 .stats-grid article,
 .panel {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
   box-shadow: var(--shadow);
-}
-
-.summary-card {
-  display: grid;
-  align-content: center;
-  gap: 8px;
-  padding: 22px;
-}
-
-.summary-card span,
-.stats-grid span {
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-
-.summary-card strong {
-  font-size: 2rem;
 }
 
 .stats-grid {
@@ -220,18 +192,16 @@ h2 {
   margin-bottom: 18px;
 }
 
-.app-section {
-  display: none;
-}
-
-.app-section.active-section {
-  display: block;
-}
-
 .stats-grid article {
   display: grid;
   gap: 8px;
   padding: 18px;
+}
+
+.stats-grid span {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .stats-grid strong {
@@ -241,10 +211,6 @@ h2 {
 .panel {
   margin-bottom: 18px;
   padding: 22px;
-}
-
-.compact-panel {
-  margin-bottom: 18px;
 }
 
 .panel-heading {
@@ -307,14 +273,16 @@ textarea:focus {
   gap: 14px;
 }
 
-.form-actions button {
+.form-actions button,
+.pay-button {
   min-height: 44px;
   padding: 0 18px;
   background: var(--primary);
   color: white;
 }
 
-.form-actions button:hover {
+.form-actions button:hover,
+.pay-button:hover {
   background: var(--primary-dark);
 }
 
@@ -344,10 +312,6 @@ textarea:focus {
   max-width: 720px;
   margin: 10px 0 0;
   color: var(--muted);
-}
-
-#search-input {
-  max-width: 280px;
 }
 
 .loan-list {
@@ -495,10 +459,6 @@ textarea:focus {
   color: var(--muted);
 }
 
-.hidden {
-  display: none;
-}
-
 @media (max-width: 900px) {
   .dashboard-layout,
   .loan-card {
@@ -537,7 +497,6 @@ textarea:focus {
   }
 
   .panel,
-  .summary-card,
   .stats-grid article {
     padding: 16px;
   }
@@ -555,9 +514,5 @@ textarea:focus {
   .app-menu,
   .help-grid {
     grid-template-columns: 1fr;
-  }
-
-  #search-input {
-    max-width: none;
   }
 }

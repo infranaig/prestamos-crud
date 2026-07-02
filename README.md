@@ -1,6 +1,6 @@
-# CRUD De Prestamos Diarios
+# CRUD De Prestamos Diarios - React + Vite
 
-Esta es tu segunda app CRUD. El objetivo es aprender con un ejemplo mas parecido a un negocio real.
+Esta es la version moderna del CRUD usando React + Vite.
 
 La app permite:
 
@@ -15,15 +15,25 @@ La app permite:
 - Ver total prestado, cobrado, pendiente y prestamos activos.
 - Guardar datos en `localStorage`.
 
-## Como abrir la app
+## Instalar y ejecutar
 
-Abre este archivo en el navegador:
+Instala dependencias:
 
-```txt
-index.html
+```bash
+npm install
 ```
 
-No necesitas instalar nada. Es HTML, CSS y JavaScript puro.
+Ejecuta en desarrollo:
+
+```bash
+npm run dev
+```
+
+Compila para produccion:
+
+```bash
+npm run build
+```
 
 ## Como probar el CRUD
 
@@ -87,9 +97,10 @@ cuota = 60
 
 ## Archivos
 
-- `index.html`: estructura visual.
-- `styles.css`: diseno.
-- `app.js`: logica del CRUD.
+- `src/App.jsx`: estado principal y flujo del CRUD.
+- `src/components`: componentes de React.
+- `src/utils`: calculos y localStorage.
+- `vite.config.js`: configuracion de Vite y GitHub Pages.
 - `GITHUB.md`: guia para crear cuenta y subir el proyecto.
 
 ## Nota importante
